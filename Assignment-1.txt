@@ -1,0 +1,329 @@
+package builtInException;
+Assignment Q-1
+
+public class BuiltInException {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		//Arithmatic built-in Exception
+		try {
+				int a =10;
+				int b=0;
+				System.out.println(a/b);
+			
+		}catch(Exception e) {
+			System.out.println("Indefine.... "+e);
+		
+
+		}
+		
+		//Out of bound built-in Exception
+		try {
+			int[] array=new int[] {1,6,5,4,7};
+			System.out.println(array[10]);
+			
+			
+		}catch(Exception e) {
+			
+			System.out.println("Out of the bound"+e);
+			
+		}
+		
+		try {
+			int[] a=null;
+			//int[] a=new int[] {1,3,4,5,6};
+			for(int i=0;i<5;i++)
+			System.out.println(a[i]);
+			
+		}catch(Exception e) {
+			System.out.println("NULL " +e);
+		}
+
+	}
+}
+
+Output:
+
+Indefine.... java.lang.ArithmeticException: / by zero
+Out of the boundjava.lang.ArrayIndexOutOfBoundsException: Index 10 out of bounds for length 5
+NULL java.lang.NullPointerException: Cannot load from int array because "a" is null
+
+Q-2
+
+package checkPrime;
+import java.util.*;
+
+class NegativeNumberNotAllowed extends Exception{
+	
+	NegativeNumberNotAllowed(){
+		
+	}
+	public String toString() {
+		return "Negative Numbers are not allowed";
+	}
+}
+
+class NumberNotPrime extends Exception{
+	
+	 int b;
+	NumberNotPrime(int b){
+		this.b=b;	
+	}
+	public String toString() {
+		return " "+b+" Not a Prime";
+	}
+}
+
+public class CheckPrime {
+
+	public static void main(String[] args) throws Exception{
+		// TODO Auto-generated method stub
+		
+		Scanner sc=new Scanner(System.in);
+		int a=sc.nextInt();
+		
+		if(a<0) {
+			throw new NegativeNumberNotAllowed();
+		}
+		int p=0;
+		for(int i=2;i<a/2;i++) {
+			
+			if(a%i==0)
+			{
+				
+				 p=1;
+			}
+					
+		}
+		if(p==1) {
+			throw new NumberNotPrime(a);
+		}
+		else
+			System.out.println(""+a+" is a Prime Number");
+		
+	}
+
+}
+Output:
+37
+37 is a Prime Number
+
+-10
+Exception in thread "main" Negative Numbers are not allowed
+	at CheckPrime/checkPrime.CheckPrime.main(CheckPrime.java:34)
+
+10
+Exception in thread "main"  10 Not a Prime
+	at CheckPrime/checkPrime.CheckPrime.main(CheckPrime.java:47)
+
+Q-3
+
+package checkString;
+import java.util.*;
+
+
+class SubStringNotFoundException extends Exception {
+	String s;
+	SubStringNotFoundException (String s){
+		this.s=s;	
+	}
+	public String toString() {
+		return "SDMCET/sdmcet not present";
+		
+	}
+}
+public class CheckString {
+
+	public static void main(String[] args)throws Exception {
+		// TODO Auto-generated method stub
+		Scanner sc=new Scanner(System.in);
+		
+		System.out.println("Enter Text");
+		String s=sc.nextLine();
+		
+		boolean v1=s.contains("SDMCET");
+		boolean v2=s.contains("sdmcet");
+		
+		try{
+			if(v1||v2) {
+				System.out.println("Success..");
+			}
+			else {
+				throw new SubStringNotFoundException (s);
+			}
+			
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+
+	}
+
+}
+
+Output:
+
+Enter Text
+hello sdmcet
+Success..
+
+Enter Text
+Hello Everyone
+SDMCET/sdmcet not present
+
+Q-4
+
+package a4;
+import java.io.FileInputStream;
+import java.util.*;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+class VowelsNotAllowedException extends Exception {
+	String s;
+	   VowelsNotAllowedException(String s){
+		this.s=s;
+	}
+	public String toString() {
+		return "Vowels not allowed";
+	}
+}
+
+
+
+public class ConsonentCheck {
+	 public static void main(String args[]) throws Exception {
+		 
+		 Scanner sc=new Scanner(System.in);
+		 FileReader fin = null;
+		 FileWriter fout=null;
+		 try {
+			 
+		 fin=new  FileReader("C:\\Users\\Prajwal Budnur\\eclipse-workspace\\A4\\src\\a4\\ip");
+		 fout=new  FileWriter("C:\\Users\\Prajwal Budnur\\eclipse-workspace\\A4\\src\\a4\\op");
+		
+		 
+		 char s,i = 0;
+		 String st = null;
+		
+		
+			while((s= (char) fin.read())!=-1) {
+				
+			if(s!='a'||s!='e'||s!='i'||s!='o'||s!='u') {
+				
+				fout.write(s);
+				}	
+			else {	
+				throw new VowelsNotAllowedException("vowels present");
+			}
+		 }
+			
+		 }catch(VowelsNotAllowedException e) {
+			System.out.println(e);
+			
+		}
+	 }
+}
+
+Q-5
+
+mport java.util.*;
+import java.util.Scanner;
+import java.io.*;
+
+
+public class Assignment_5 {
+    
+  public static void main(String[] args) {
+    try{
+    FileWriter w = new FileWriter("Integer.txt"); 
+    Scanner sc= new Scanner(System.in);
+ 
+ 
+    System.out.println("Enter the value of n Integer to write on a file :");
+    int n = sc.nextInt();
+    for (int i = 0; i < n; i++) {
+        System.out.print("Enter the " + (i + 1) +  "to write :" );
+        int input = sc.nextInt();
+        w.write(input + "\t");
+  }w.close();
+  int i=0;
+  int arr[] = new int[n];
+ File file = new File("Integer.txt");
+ Scanner read = new Scanner(file);
+ while(read.hasNext()){
+  arr[i++] = Integer.valueOf(read.next()); 
+ }
+
+
+ Thread t1= new Thread(){
+  
+    public void run(){
+      Arrays.sort(arr, 0, (arr.length/3));
+      for (int j = 0; j < (arr.length/3); j++) {
+        System.out.println(arr[j]);
+      }
+      
+    }
+
+ };
+ Thread t2= new Thread(){
+   
+   public void run(){
+     Arrays.sort(arr, (arr.length/3), (2*(arr.length/3)));
+     for (int j =  (arr.length/3); j < (2*(arr.length/3)); j++) {
+       System.out.println(arr[j]);
+      }
+    }
+    
+  };
+  Thread t3= new Thread(){
+    
+    public void run(){
+      Arrays.sort(arr,  (2*(arr.length/3)),(n-1));
+      for (int j = (2*(arr.length/3)); j < n; j++) {
+        System.out.println(arr[j]);
+      }
+      
+    }
+    
+  };
+  Thread t4= new Thread(){
+    
+    public void run(){
+      Arrays.sort(arr);
+      // Arrays.sort(arr,  0,n);
+
+      StringBuilder s = new StringBuilder();
+      try{
+      FileWriter write  =new FileWriter("SortedInteger.txt"); 
+      System.out.println("t4 is printing");
+      for (int j = 0; j < n; j++) {
+      
+        s.append(String.valueOf(arr[j]) + "\t");
+      
+      }
+      write.write(s.toString());
+      write.close();
+    }catch (Exception e){
+      System.out.println(e);
+    }      
+    }
+    
+  };
+  t1.start();
+  t1.join();
+  t2.start();
+  t2.join();
+  t3.start();
+  t3.join();
+  t4.start();
+
+ }catch(Exception e){
+        System.out.println(e);
+    }
+  }
+
+}	
